@@ -133,11 +133,10 @@ var EndomembraneAction = function () {
     }, {
         key: "call",
         value: function call() {
-            for (var _len2 = arguments.length, payload = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-                payload[_key2] = arguments[_key2];
-            }
-
-            this.func.apply(this, [this.commit.bind(this)].concat(payload));
+            this.func.bind({
+                commit: this.commit.bind(this),
+                store: this.store._getImmutableStore()
+            }).apply(undefined, arguments);
         }
     }]);
     return EndomembraneAction;
@@ -156,11 +155,9 @@ var EndomembraneGetter = function () {
     createClass(EndomembraneGetter, [{
         key: "get",
         value: function get$$1() {
-            for (var _len = arguments.length, payload = Array(_len), _key = 0; _key < _len; _key++) {
-                payload[_key] = arguments[_key];
-            }
-
-            return this.func.apply(this, [this.store._getImmutableStore()].concat(payload));
+            return this.func.bind({
+                store: this.store._getImmutableStore()
+            }).apply(undefined, arguments);
         }
     }]);
     return EndomembraneGetter;

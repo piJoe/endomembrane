@@ -13,7 +13,10 @@ class EndomembraneAction {
     }
 
     call(...payload) {
-        this.func(this.commit.bind(this), ...payload)
+        this.func.bind({
+            commit: this.commit.bind(this),
+            store: this.store._getImmutableStore()
+        })(...payload)
     }
 }
 

@@ -7,7 +7,9 @@ class EndomembraneGetter {
     }
 
     get(...payload) {
-        return this.func(this.store._getImmutableStore(), ...payload)
+        return this.func.bind({
+            store: this.store._getImmutableStore(),
+        })(...payload)
     }
 }
 
